@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1d3a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="نیوندرا جات" />
+  <title>نیوندرا جات — لین دین ریکارڈ | Neudrajaat Record</title>
+
+  <!-- Custom Royal Navy & Golden 'ن' App Icon (Favicon) -->
+  <link id="app-favicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2308142b'/%3E%3Cstop offset='50%25' stop-color='%230f2952'/%3E%3Cstop offset='100%25' stop-color='%23163b73'/%3E%3C/linearGradient%3E%3ClinearGradient id='gold' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fde68a'/%3E%3Cstop offset='45%25' stop-color='%23f59e0b'/%3E%3Cstop offset='100%25' stop-color='%23b45309'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='112' fill='url(%23bg)'/%3E%3Crect x='22' y='22' width='468' height='468' rx='94' fill='none' stroke='url(%23gold)' stroke-width='10'/%3E%3Cpath d='M96 355 Q176 325 256 355 Q336 325 416 355 L416 385 Q336 355 256 385 Q176 355 96 385 Z' fill='url(%23gold)'/%3E%3Cpath d='M110 340 Q183 314 256 340 Q329 314 402 340' fill='none' stroke='%23fef3c7' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M155 170 C145 255 190 305 256 305 C322 305 367 255 357 170' fill='none' stroke='url(%23gold)' stroke-width='26' stroke-linecap='round'/%3E%3Ccircle cx='256' cy='182' r='22' fill='url(%23gold)'/%3E%3C/svg%3E" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Nastaliq Urdu', 'Noto Sans Arabic', serif;
+      background: radial-gradient(circle at top right, #e0e7ff 0%, #f1f5f9 45%, #fef3c7 100%);
+      color: #0f172a;
+      line-height: 2.05;
+    }
+    .en-num, input[type="number"], input[type="date"], input[type="tel"] {
+      font-family: 'Inter', system-ui, sans-serif !important;
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+    .royal-header {
+      background: linear-gradient(135deg, #071226 0%, #0f2952 55%, #163a70 100%);
+      border-bottom: 2px solid rgba(245, 158, 11, 0.55);
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fef08a 0%, #f59e0b 60%, #fbbf24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .card-elevated {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(203, 213, 225, 0.85);
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <div id="toast-container" class="fixed top-4 left-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <header class="royal-header text-white shadow-xl sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-3 sm:px-5 py-3 space-y-3">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+        <!-- Custom SVG Golden 'ن' App Emblem -->
+        <div class="flex items-center gap-3.5">
+          <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl shadow-lg shrink-0 ring-2 ring-amber-400/70 overflow-hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-full h-full">
+              <defs>
+                <linearGradient id="hdr-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#061024"/>
+                  <stop offset="50%" stop-color="#0e274f"/>
+                  <stop offset="100%" stop-color="#173e78"/>
+                </linearGradient>
+                <linearGradient id="hdr-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fef08a"/>
+                  <stop offset="45%" stop-color="#f59e0b"/>
+                  <stop offset="100%" stop-color="#b45309"/>
+                </linearGradient>
+              </defs>
+              <rect width="512" height="512" rx="96" fill="url(#hdr-bg)"/>
+              <rect x="20" y="20" width="472" height="472" rx="82" fill="none" stroke="url(#hdr-gold)" stroke-width="10"/>
+              <path d="M92 356 Q174 324 256 356 Q338 324 420 356 L420 388 Q338 356 256 388 Q174 356 92 388 Z" fill="url(#hdr-gold)"/>
+              <path d="M108 338 Q182 310 256 338 Q330 310 404 338" fill="none" stroke="#fef3c7" stroke-width="6" stroke-linecap="round"/>
+              <path d="M152 166 C142 254 188 306 256 306 C324 306 370 254 360 166" fill="none" stroke="url(#hdr-gold)" stroke-width="28" stroke-linecap="round"/>
+              <circle cx="256" cy="180" r="23" fill="url(#hdr-gold)"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="text-lg sm:text-2xl font-bold gold-gradient-text">نیوندرا جات — لین دین ریکارڈ</h1>
+            <div class="text-xs text-emerald-300">خودکار محفوظ (Auto-Saved)</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 sm:gap-3">
+          <div class="rounded-xl bg-emerald-950/80 border border-emerald-500/40 px-3 py-1.5 text-center">
+            <div class="text-[11px] text-emerald-300 font-bold">کل لیا</div>
+            <div id="hdr-total-liya" class="en-num text-xs sm:text-sm font-extrabold text-white">Rs. 0</div>
+          </div>
+          <div class="rounded-xl bg-rose-950/80 border border-rose-500/40 px-3 py-1.5 text-center">
+            <div class="text-[11px] text-rose-300 font-bold">کل دیا</div>
+            <div id="hdr-total-diya" class="en-num text-xs sm:text-sm font-extrabold text-white">Rs. 0</div>
+          </div>
+          <div class="rounded-xl bg-amber-500/15 border border-amber-400/50 px-3 py-1.5 text-center">
+            <div class="text-[11px] text-amber-300 font-bold">صافی بیلنس</div>
+            <div id="hdr-net-balance" class="en-num text-xs sm:text-sm font-extrabold text-amber-200">Rs. 0</div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="grid grid-cols-3 bg-slate-950/70 p-1.5 rounded-2xl border border-amber-400/30 gap-1.5">
+        <button type="button" data-tab="entry" class="nav-tab-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-400 text-slate-950">1. نیا اندراج</button>
+        <button type="button" data-tab="ledger" class="nav-tab-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-200 hover:bg-white/10">2. ریکارڈ لسٹ (<span id="badge-total-entries" class="en-num">0</span>)</button>
+        <button type="button" data-tab="reports" class="nav-tab-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-200 hover:bg-white/10">3. کھاتہ رپورٹ اور بیک اپ</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-5 py-5 space-y-5">
+
+    <!-- TAB 1: ENTRY -->
+    <section id="panel-entry" class="tab-panel space-y-5">
+      <div class="card-elevated rounded-2xl p-4 sm:p-5 space-y-3">
+        <h2 class="text-sm sm:text-base font-bold text-slate-900">1. تقریب کا نام اور تاریخ</h2>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-3">
+          <div class="md:col-span-6">
+            <label class="block text-xs font-bold text-slate-700 mb-1">تقریب کا نام *</label>
+            <input type="text" id="sticky-event-name" class="w-full rounded-xl border-2 border-indigo-200 px-3.5 py-2 text-sm font-bold outline-none focus:border-indigo-600" />
+          </div>
+          <div class="md:col-span-6">
+            <label class="block text-xs font-bold text-slate-700 mb-1">تاریخ *</label>
+            <input type="date" id="sticky-event-date" class="w-full rounded-xl border-2 border-indigo-200 px-3.5 py-2 text-sm font-bold outline-none focus:border-indigo-600" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card-elevated rounded-2xl p-4 sm:p-5 space-y-4">
+        <div class="flex items-center justify-between gap-2">
+          <h2 class="text-sm sm:text-base font-bold text-slate-900">2. شخص منتخب کریں یا نیا شامل کریں</h2>
+          <button type="button" id="toggle-add-person-btn" class="px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-extrabold">+ نیا شخص</button>
+        </div>
+
+        <div id="add-person-drawer" class="hidden rounded-2xl bg-amber-50 border-2 border-amber-400 p-4 space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div>
+              <label class="block text-xs font-bold mb-1">نام *</label>
+              <input type="text" id="new-person-name" placeholder="مثلاً: غفور احمد" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-bold" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold mb-1">ولدیت</label>
+              <input type="text" id="new-person-sonof" placeholder="اختیاری" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold mb-1">پتہ</label>
+              <input type="text" id="new-person-address" placeholder="اختیاری" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold mb-1">فون</label>
+              <input type="tel" id="new-person-phone" placeholder="اختیاری" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm" />
+            </div>
+          </div>
+          <div class="flex justify-end">
+            <button type="button" id="save-new-person-btn" class="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm font-bold">✓ شخص محفوظ کریں</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-3">
+          <div class="md:col-span-4">
+            <input type="text" id="person-search-input" placeholder="🔍 نام تلاش کریں..." class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-sm" />
+          </div>
+          <div class="md:col-span-8">
+            <select id="person-dropdown" class="w-full rounded-xl border-2 border-slate-300 bg-white px-3.5 py-2 text-sm font-bold"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-elevated rounded-2xl p-4 sm:p-6 space-y-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <button type="button" id="btn-dir-liya" class="rounded-2xl border-2 border-emerald-600 bg-emerald-600 text-white p-4 text-right font-bold text-base shadow-md">↓ لیا (جو مجھے ملا)</button>
+          <button type="button" id="btn-dir-diya" class="rounded-2xl border-2 border-slate-200 bg-white text-slate-800 p-4 text-right font-bold text-base">↑ دیا (جو میں نے دیا)</button>
+        </div>
+
+        <div id="item-type-buttons-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-2.5"></div>
+
+        <div class="rounded-2xl border-2 border-indigo-200 bg-indigo-50/40 p-4 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+            <h3 id="builder-item-title" class="text-base font-bold text-slate-950">سلامی</h3>
+            <span id="builder-item-hint" class="text-xs font-bold text-indigo-800 bg-indigo-100 px-2.5 py-1 rounded-lg">رقم درج کریں</span>
+          </div>
+          <div id="builder-fields-container" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end"></div>
+          <div class="flex justify-end">
+            <button type="button" id="add-to-queue-btn" class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-950 font-extrabold text-xs sm:text-sm">+ فہرست میں شامل کریں</button>
+          </div>
+        </div>
+
+        <div id="queued-items-wrapper" class="hidden space-y-2 rounded-2xl bg-amber-50 border border-amber-300 p-4">
+          <div class="flex items-center justify-between text-xs sm:text-sm font-bold">
+            <span>شامل آئٹمز (<span id="queued-items-count" class="en-num">0</span>)</span>
+            <span>کل نقدی: <span id="queued-total-amount" class="en-num font-extrabold">Rs. 0</span></span>
+          </div>
+          <div id="queued-items-list" class="space-y-2"></div>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <button type="button" id="save-complete-entry-btn" class="px-6 py-3.5 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-base shadow-lg">✓ ریکارڈ محفوظ کریں</button>
+          <button type="button" id="clear-entry-form-btn" class="px-5 py-3.5 rounded-2xl border border-slate-300 bg-white text-slate-700 font-bold text-sm">فارم صاف کریں</button>
+        </div>
+      </div>
+
+      <div class="card-elevated rounded-2xl overflow-hidden">
+        <div class="px-4 py-3 bg-slate-900 text-white font-bold text-sm text-amber-300">حالیہ محفوظ شدہ انٹریز</div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-right border-collapse">
+            <thead>
+              <tr class="bg-slate-100 border-b text-xs font-bold text-slate-700">
+                <th class="py-2.5 px-3">#</th>
+                <th class="py-2.5 px-3">تاریخ</th>
+                <th class="py-2.5 px-3">تقریب</th>
+                <th class="py-2.5 px-3">شخص</th>
+                <th class="py-2.5 px-3">نوعیت</th>
+                <th class="py-2.5 px-3">تفصیل</th>
+                <th class="py-2.5 px-3 text-left">رقم</th>
+                <th class="py-2.5 px-3 text-center">عمل</th>
+              </tr>
+            </thead>
+            <tbody id="recent-entries-tbody" class="divide-y divide-slate-100 text-sm"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: LEDGER -->
+    <section id="panel-ledger" class="tab-panel hidden space-y-5">
+      <div class="card-elevated rounded-2xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-right border-collapse">
+            <thead>
+              <tr class="bg-slate-900 text-white text-xs font-bold">
+                <th class="py-3 px-3">#</th>
+                <th class="py-3 px-3">تاریخ</th>
+                <th class="py-3 px-3">تقریب</th>
+                <th class="py-3 px-3">شخص</th>
+                <th class="py-3 px-3">نوعیت</th>
+                <th class="py-3 px-3">تفصیل</th>
+                <th class="py-3 px-3 text-left">رقم</th>
+                <th class="py-3 px-3 text-center">عمل</th>
+              </tr>
+            </thead>
+            <tbody id="full-log-tbody" class="divide-y divide-slate-200 text-sm"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: REPORTS & BACKUP -->
+    <section id="panel-reports" class="tab-panel hidden space-y-5">
+      <div id="on-screen-report-wrapper" class="card-elevated rounded-2xl p-4 sm:p-6"></div>
+      <div class="card-elevated rounded-2xl p-5 flex flex-wrap gap-3">
+        <button type="button" id="download-json-backup-btn" class="px-5 py-3 rounded-xl bg-slate-900 text-amber-300 font-bold text-sm">💾 بیک اپ ڈاؤن لوڈ JSON</button>
+        <label class="px-5 py-3 rounded-xl border-2 border-dashed border-emerald-500 bg-emerald-50 text-emerald-950 font-bold text-sm cursor-pointer">
+          📂 بیک اپ ریستور کریں JSON
+          <input type="file" id="restore-json-file-input" accept=".json,application/json" class="hidden" />
+        </label>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    function setupAppIcon() {
+      const svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <defs>
+          <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#061024"/>
+            <stop offset="50%" stop-color="#0e274f"/>
+            <stop offset="100%" stop-color="#173e78"/>
+          </linearGradient>
+          <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fef08a"/>
+            <stop offset="45%" stop-color="#f59e0b"/>
+            <stop offset="100%" stop-color="#b45309"/>
+          </linearGradient>
+        </defs>
+        <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+        <rect x="20" y="20" width="472" height="472" rx="94" fill="none" stroke="url(#gold)" stroke-width="10"/>
+        <path d="M92 356 Q174 324 256 356 Q338 324 420 356 L420 388 Q338 356 256 388 Q174 356 92 388 Z" fill="url(#gold)"/>
+        <path d="M108 338 Q182 310 256 338 Q330 310 404 338" fill="none" stroke="#fef3c7" stroke-width="6" stroke-linecap="round"/>
+        <path d="M152 166 C142 254 188 306 256 306 C324 306 370 254 360 166" fill="none" stroke="url(#gold)" stroke-width="28" stroke-linecap="round"/>
+        <circle cx="256" cy="180" r="23" fill="url(#gold)"/>
+      </svg>`;
+      const encodedSvg = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgMarkup);
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = 512;
+          canvas.height = 512;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, 512, 512);
+          const pngDataUrl = canvas.toDataURL('image/png');
+          const appleLink = document.createElement('link');
+          appleLink.rel = 'apple-touch-icon';
+          appleLink.href = pngDataUrl;
+          document.head.appendChild(appleLink);
+        } catch (err) {}
+      };
+      img.src = encodedSvg;
+    }
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      const colors = {
+        success: 'bg-emerald-900 text-emerald-100 border-emerald-400',
+        error: 'bg-rose-900 text-rose-100 border-rose-400',
+        warning: 'bg-amber-950 text-amber-100 border-amber-400'
+      };
+      toast.className = `pointer-events-auto rounded-xl border-2 px-4 py-2.5 text-xs sm:text-sm font-bold shadow-xl ${colors[type] || colors.success}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    const STORAGE_KEYS = {
+      PERSONS: 'neudrajaat_v5_persons',
+      ENTRIES: 'neudrajaat_v5_entries',
+      STICKY_EVENT: 'neudrajaat_v5_sticky_event',
+      STICKY_DATE: 'neudrajaat_v5_sticky_date'
+    };
+
+    const ITEM_TYPES = [
+      { id: 'salami',  num: 1,  icon: '💵', urdu: 'سلامی',      mode: 'amount',     hint: 'صرف رقم درج کریں' },
+      { id: 'neundra', num: 2,  icon: '🧧', urdu: 'نیوندرا',    mode: 'amount',     hint: 'صرف رقم درج کریں' },
+      { id: 'mala',    num: 3,  icon: '📿', urdu: 'مالا',       mode: 'amount',     hint: 'صرف رقم درج کریں' },
+      { id: 'gana',    num: 4,  icon: '🎶', urdu: 'گانا',       mode: 'amount',     hint: 'صرف رقم درج کریں' },
+      { id: 'sehra',   num: 5,  icon: '👑', urdu: 'سہرا',       mode: 'amount',     hint: 'صرف رقم درج کریں' },
+      { id: 'mehndi',  num: 6,  icon: '🌿', urdu: 'مہندی',      mode: 'amount',     hint: 'صرف رقم درج کریں' },
+      { id: 'cheeni',  num: 7,  icon: '🍚', urdu: 'چینی',       mode: 'qty_uom',    defaultUom: 'کلو',  hint: 'مقدار اور یونٹ درج کریں' },
+      { id: 'dresses', num: 8,  icon: '👘', urdu: 'سوٹ / کپڑے', mode: 'qty_uom',    defaultUom: 'جوڑے', hint: 'مقدار اور یونٹ درج کریں' },
+      { id: 'gift',    num: 9,  icon: '🎁', urdu: 'تحفہ / گفٹ', mode: 'detail',     hint: 'تفصیل درج کریں' },
+      { id: 'other',   num: 10, icon: '📦', urdu: 'دیگر اشیاء', mode: 'detail',     hint: 'تفصیل درج کریں' }
+    ];
+
+    function getTodayISO() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    function formatDateEN(isoStr) {
+      if (!isoStr) return '';
+      const p = isoStr.split('-');
+      return p.length === 3 ? `${p[2]}-${p[1]}-${p[0]}` : isoStr;
+    }
+
+    function formatNumEN(val) {
+      return (Number(val) || 0).toLocaleString('en-US');
+    }
+
+    function escapeHTML(str) {
+      return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    let appState = {
+      persons: [],
+      entries: [],
+      stickyEvent: 'شادی',
+      stickyDate: getTodayISO(),
+      direction: 'Liya',
+      selectedItemTypeId: 'salami',
+      queuedItems: []
+    };
+
+    function getPersonById(id) {
+      return appState.persons.find(p => p.id === id) || { id: 'unknown', name: 'نامعلوم', sonOf: '', address: '', phone: '' };
+    }
+
+    function getItemTypeMeta(id) {
+      return ITEM_TYPES.find(t => t.id === id) || ITEM_TYPES[0];
+    }
+
+    function formatSingleItemText(item) {
+      const meta = getItemTypeMeta(item.typeId);
+      if (meta.mode === 'amount') return `${meta.urdu}: Rs. ${formatNumEN(item.amount)}`;
+      if (meta.mode === 'qty_uom') return `${meta.urdu}: ${item.qty} ${item.uom}${item.remarks ? ' (' + item.remarks + ')' : ''}`;
+      return `${meta.urdu}: ${item.detail}${item.remarks ? ' (' + item.remarks + ')' : ''}`;
+    }
+
+    function loadStateFromStorage() {
+      try {
+        const rawP = localStorage.getItem(STORAGE_KEYS.PERSONS);
+        const rawE = localStorage.getItem(STORAGE_KEYS.ENTRIES);
+        appState.persons = rawP ? JSON.parse(rawP) : [
+          { id: 'p_1', name: 'غفور احمد', sonOf: 'محمد حلیم', address: 'اوکاڑہ', phone: '03001234567' },
+          { id: 'p_2', name: 'حاجی محمد اسلم', sonOf: 'عبدالرحمن', address: 'دیپالپور', phone: '03219876543' }
+        ];
+        appState.entries = rawE ? JSON.parse(rawE) : [];
+        appState.stickyEvent = localStorage.getItem(STORAGE_KEYS.STICKY_EVENT) || 'شادی';
+        appState.stickyDate = localStorage.getItem(STORAGE_KEYS.STICKY_DATE) || getTodayISO();
+      } catch (e) {
+        appState.persons = [];
+        appState.entries = [];
+      }
+    }
+
+    function persistState() {
+      localStorage.setItem(STORAGE_KEYS.PERSONS, JSON.stringify(appState.persons));
+      localStorage.setItem(STORAGE_KEYS.ENTRIES, JSON.stringify(appState.entries));
+      localStorage.setItem(STORAGE_KEYS.STICKY_EVENT, appState.stickyEvent);
+      localStorage.setItem(STORAGE_KEYS.STICKY_DATE, appState.stickyDate);
+      updateHeaderBadges();
+    }
+
+    function updateHeaderBadges() {
+      let liya = 0, diya = 0;
+      appState.entries.forEach(e => {
+        if (e.direction === 'Liya') liya += Number(e.totalAmount) || 0;
+        else diya += Number(e.totalAmount) || 0;
+      });
+      const net = liya - diya;
+      document.getElementById('hdr-total-liya').textContent = `Rs. ${formatNumEN(liya)}`;
+      document.getElementById('hdr-total-diya').textContent = `Rs. ${formatNumEN(diya)}`;
+      document.getElementById('hdr-net-balance').textContent = `${net > 0 ? '+' : net < 0 ? '-' : ''}Rs. ${formatNumEN(Math.abs(net))}`;
+      document.getElementById('badge-total-entries').textContent = appState.entries.length;
+    }
+
+    function switchMainTab(tabId) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById(`panel-${tabId}`).classList.remove('hidden');
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        const active = btn.dataset.tab === tabId;
+        btn.className = active
+          ? 'nav-tab-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-400 text-slate-950'
+          : 'nav-tab-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-200 hover:bg-white/10';
+      });
+      if (tabId === 'ledger') renderFullLog();
+      if (tabId === 'reports') renderReports();
+    }
+
+    document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchMainTab(btn.dataset.tab));
+    });
+
+    function setDirection(dir) {
+      appState.direction = dir;
+      const btnLiya = document.getElementById('btn-dir-liya');
+      const btnDiya = document.getElementById('btn-dir-diya');
+      if (dir === 'Liya') {
+        btnLiya.className = 'rounded-2xl border-2 border-emerald-600 bg-emerald-600 text-white p-4 text-right font-bold text-base shadow-md';
+        btnDiya.className = 'rounded-2xl border-2 border-slate-200 bg-white text-slate-800 p-4 text-right font-bold text-base';
+      } else {
+        btnDiya.className = 'rounded-2xl border-2 border-rose-600 bg-rose-600 text-white p-4 text-right font-bold text-base shadow-md';
+        btnLiya.className = 'rounded-2xl border-2 border-slate-200 bg-white text-slate-800 p-4 text-right font-bold text-base';
+      }
+    }
+
+    document.getElementById('btn-dir-liya').addEventListener('click', () => setDirection('Liya'));
+    document.getElementById('btn-dir-diya').addEventListener('click', () => setDirection('Diya'));
+
+    function renderItemTypeButtons() {
+      const grid = document.getElementById('item-type-buttons-grid');
+      grid.innerHTML = ITEM_TYPES.map(it => {
+        const selected = it.id === appState.selectedItemTypeId;
+        return `
+          <button type="button" data-item-id="${it.id}" class="item-type-btn rounded-xl p-2.5 text-right border-2 flex items-center gap-2 ${
+            selected ? 'bg-indigo-700 text-white border-amber-300 shadow-md' : 'bg-white text-slate-900 border-slate-200 hover:bg-slate-50'
+          }">
+            <span class="text-lg">${it.icon}</span>
+            <span class="text-xs sm:text-sm font-bold truncate">${it.urdu}</span>
+          </button>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('.item-type-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.selectedItemTypeId = btn.dataset.itemId;
+          renderItemTypeButtons();
+          renderDynamicFields();
+        });
+      });
+    }
+
+    function renderDynamicFields() {
+      const meta = getItemTypeMeta(appState.selectedItemTypeId);
+      document.getElementById('builder-item-title').textContent = `${meta.icon} ${meta.urdu}`;
+      document.getElementById('builder-item-hint').textContent = meta.hint;
+      const box = document.getElementById('builder-fields-container');
+
+      if (meta.mode === 'amount') {
+        box.innerHTML = `
+          <div class="sm:col-span-6">
+            <label class="block text-xs font-bold mb-1">رقم (Rs.) *</label>
+            <input type="number" id="fld-amount" min="1" step="any" placeholder="مثلاً: 1000" class="w-full rounded-xl border-2 border-indigo-300 bg-white px-3.5 py-2 text-sm font-extrabold" />
+          </div>`;
+      } else if (meta.mode === 'qty_uom') {
+        box.innerHTML = `
+          <div class="sm:col-span-3">
+            <label class="block text-xs font-bold mb-1">مقدار *</label>
+            <input type="number" id="fld-qty" min="0.1" step="any" placeholder="مثلاً: 2" class="w-full rounded-xl border-2 border-indigo-300 bg-white px-3.5 py-2 text-sm font-extrabold" />
+          </div>
+          <div class="sm:col-span-3">
+            <label class="block text-xs font-bold mb-1">یونٹ *</label>
+            <input type="text" id="fld-uom" value="${meta.defaultUom}" class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-sm font-bold" />
+          </div>
+          <div class="sm:col-span-6">
+            <label class="block text-xs font-bold mb-1">ریمارکس</label>
+            <input type="text" id="fld-remarks" placeholder="اختیاری" class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-sm" />
+          </div>`;
+      } else {
+        box.innerHTML = `
+          <div class="sm:col-span-6">
+            <label class="block text-xs font-bold mb-1">تفصیل *</label>
+            <input type="text" id="fld-detail" placeholder="مثلاً: گھڑی، ڈنر سیٹ" class="w-full rounded-xl border-2 border-indigo-300 bg-white px-3.5 py-2 text-sm font-bold" />
+          </div>
+          <div class="sm:col-span-6">
+            <label class="block text-xs font-bold mb-1">ریمارکس</label>
+            <input type="text" id="fld-remarks" placeholder="اختیاری" class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-sm" />
+          </div>`;
+      }
+    }
+
+    function readCurrentItem(silent = false) {
+      const meta = getItemTypeMeta(appState.selectedItemTypeId);
+      if (meta.mode === 'amount') {
+        const amt = parseFloat(document.getElementById('fld-amount')?.value);
+        if (!amt || amt <= 0) {
+          if (!silent) showToast('رقم درج کریں!', 'error');
+          return null;
+        }
+        return { typeId: meta.id, amount: amt };
+      }
+      if (meta.mode === 'qty_uom') {
+        const qty = document.getElementById('fld-qty')?.value.trim();
+        const uom = document.getElementById('fld-uom')?.value.trim() || meta.defaultUom;
+        const remarks = document.getElementById('fld-remarks')?.value.trim() || '';
+        if (!qty || Number(qty) <= 0) {
+          if (!silent) showToast('مقدار درج کریں!', 'error');
+          return null;
+        }
+        return { typeId: meta.id, qty, uom, remarks };
+      }
+      const detail = document.getElementById('fld-detail')?.value.trim();
+      const remarks = document.getElementById('fld-remarks')?.value.trim() || '';
+      if (!detail) {
+        if (!silent) showToast('تفصیل درج کریں!', 'error');
+        return null;
+      }
+      return { typeId: meta.id, detail, remarks };
+    }
+
+    function renderQueue() {
+      const wrap = document.getElementById('queued-items-wrapper');
+      const list = document.getElementById('queued-items-list');
+      if (appState.queuedItems.length === 0) {
+        wrap.classList.add('hidden');
+        return;
+      }
+      wrap.classList.remove('hidden');
+      document.getElementById('queued-items-count').textContent = appState.queuedItems.length;
+      const total = appState.queuedItems.reduce((s, i) => s + (Number(i.amount) || 0), 0);
+      document.getElementById('queued-total-amount').textContent = `Rs. ${formatNumEN(total)}`;
+      list.innerHTML = appState.queuedItems.map((it, idx) => `
+        <div class="flex items-center justify-between rounded-xl bg-white border border-amber-300 px-3 py-2 text-xs sm:text-sm font-bold">
+          <span>${escapeHTML(formatSingleItemText(it))}</span>
+          <button type="button" onclick="removeQueueItem(${idx})" class="text-rose-700">ہٹائیں ✕</button>
+        </div>
+      `).join('');
+    }
+
+    function removeQueueItem(idx) {
+      appState.queuedItems.splice(idx, 1);
+      renderQueue();
+    }
+
+    document.getElementById('add-to-queue-btn').addEventListener('click', () => {
+      const it = readCurrentItem(false);
+      if (!it) return;
+      appState.queuedItems.push(it);
+      renderQueue();
+      renderDynamicFields();
+      showToast('آئٹم فہرست میں شامل ہو گیا۔');
+    });
+
+    document.getElementById('save-complete-entry-btn').addEventListener('click', () => {
+      const personId = document.getElementById('person-dropdown').value;
+      if (!personId) {
+        showToast('پہلے شخص منتخب کریں!', 'error');
+        return;
+      }
+      const eventName = document.getElementById('sticky-event-name').value.trim() || 'تقریب';
+      const eventDate = document.getElementById('sticky-event-date').value || getTodayISO();
+      const current = readCurrentItem(true);
+      if (current) appState.queuedItems.push(current);
+      if (appState.queuedItems.length === 0) {
+        showToast('رقم یا تفصیل درج کریں!', 'error');
+        return;
+      }
+
+      appState.stickyEvent = eventName;
+      appState.stickyDate = eventDate;
+      const totalAmount = appState.queuedItems.reduce((s, i) => s + (Number(i.amount) || 0), 0);
+
+      appState.entries.unshift({
+        id: 'e_' + Date.now(),
+        event: eventName,
+        date: eventDate,
+        personId,
+        direction: appState.direction,
+        items: [...appState.queuedItems],
+        totalAmount
+      });
+
+      appState.queuedItems = [];
+      persistState();
+      renderQueue();
+      renderDynamicFields();
+      renderRecent();
+      showToast('✓ ریکارڈ محفوظ ہو گیا!');
+    });
+
+    document.getElementById('clear-entry-form-btn').addEventListener('click', () => {
+      appState.queuedItems = [];
+      renderQueue();
+      renderDynamicFields();
+    });
+
+    function deleteEntry(id) {
+      appState.entries = appState.entries.filter(e => e.id !== id);
+      persistState();
+      renderRecent();
+      renderFullLog();
+      renderReports();
+      showToast('ریکارڈ حذف کر دیا گیا۔', 'warning');
+    }
+
+    function buildRowHTML(e, idx) {
+      const p = getPersonById(e.personId);
+      const isLiya = e.direction === 'Liya';
+      return `
+        <tr>
+          <td class="py-2.5 px-3 en-num text-xs">${idx}</td>
+          <td class="py-2.5 px-3 en-num text-xs">${formatDateEN(e.date)}</td>
+          <td class="py-2.5 px-3 text-xs font-bold">${escapeHTML(e.event)}</td>
+          <td class="py-2.5 px-3 text-xs font-bold">${escapeHTML(p.name)}</td>
+          <td class="py-2.5 px-3 text-xs font-bold ${isLiya ? 'text-emerald-700' : 'text-rose-700'}">${isLiya ? '↓ لیا' : '↑ دیا'}</td>
+          <td class="py-2.5 px-3 text-xs">${escapeHTML((e.items || []).map(formatSingleItemText).join(' + '))}</td>
+          <td class="py-2.5 px-3 text-left en-num text-xs font-extrabold">Rs. ${formatNumEN(e.totalAmount)}</td>
+          <td class="py-2.5 px-3 text-center"><button type="button" onclick="deleteEntry('${e.id}')" class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 text-xs font-bold">حذف</button></td>
+        </tr>`;
+    }
+
+    function renderRecent() {
+      const tb = document.getElementById('recent-entries-tbody');
+      tb.innerHTML = appState.entries.length
+        ? appState.entries.slice(0, 10).map((e, i) => buildRowHTML(e, i + 1)).join('')
+        : `<tr><td colspan="8" class="py-6 text-center text-xs text-slate-500">ابھی کوئی انٹری نہیں ہے۔</td></tr>`;
+    }
+
+    function renderFullLog() {
+      const tb = document.getElementById('full-log-tbody');
+      tb.innerHTML = appState.entries.length
+        ? appState.entries.map((e, i) => buildRowHTML(e, i + 1)).join('')
+        : `<tr><td colspan="8" class="py-6 text-center text-xs text-slate-500">کوئی ریکارڈ نہیں ہے۔</td></tr>`;
+    }
+
+    function renderReports() {
+      const map = new Map();
+      appState.persons.forEach(p => map.set(p.id, { person: p, liya: 0, diya: 0 }));
+      appState.entries.forEach(e => {
+        if (!map.has(e.personId)) map.set(e.personId, { person: getPersonById(e.personId), liya: 0, diya: 0 });
+        const r = map.get(e.personId);
+        if (e.direction === 'Liya') r.liya += Number(e.totalAmount) || 0;
+        else r.diya += Number(e.totalAmount) || 0;
+      });
+
+      const rows = Array.from(map.values()).map((r, i) => ({ ...r, idx: i + 1, net: r.liya - r.diya }));
+      document.getElementById('on-screen-report-wrapper').innerHTML = `
+        <h2 class="text-lg font-bold mb-3">مکمل کھاتہ رپورٹ</h2>
+        <div class="overflow-x-auto rounded-xl border">
+          <table class="w-full text-right border-collapse">
+            <thead>
+              <tr class="bg-slate-900 text-white text-xs">
+                <th class="py-2.5 px-3">#</th>
+                <th class="py-2.5 px-3">نام</th>
+                <th class="py-2.5 px-3 text-left">کل لیا</th>
+                <th class="py-2.5 px-3 text-left">کل دیا</th>
+                <th class="py-2.5 px-3 text-left">صافی بیلنس</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y text-sm">
+              ${rows.map(r => `
+                <tr>
+                  <td class="py-2.5 px-3 en-num text-xs">${r.idx}</td>
+                  <td class="py-2.5 px-3 font-bold">${escapeHTML(r.person.name)}</td>
+                  <td class="py-2.5 px-3 text-left en-num font-bold text-emerald-800">Rs. ${formatNumEN(r.liya)}</td>
+                  <td class="py-2.5 px-3 text-left en-num font-bold text-rose-800">Rs. ${formatNumEN(r.diya)}</td>
+                  <td class="py-2.5 px-3 text-left en-num font-extrabold">${r.net > 0 ? '+' : r.net < 0 ? '-' : ''}Rs. ${formatNumEN(Math.abs(r.net))}</td>
+                </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+    function syncPersons(selectId = null) {
+      const q = document.getElementById('person-search-input').value.trim().toLowerCase();
+      const sel = document.getElementById('person-dropdown');
+      const target = selectId || sel.value;
+      const list = appState.persons.filter(p => !q || (p.name + ' ' + p.phone + ' ' + p.address).toLowerCase().includes(q));
+      sel.innerHTML = list.length
+        ? list.map(p => `<option value="${p.id}">${escapeHTML(p.name)}${p.phone ? ' (' + escapeHTML(p.phone) + ')' : ''}</option>`).join('')
+        : `<option value="">-- کوئی شخص نہیں ملا --</option>`;
+      if (target) sel.value = target;
+    }
+
+    document.getElementById('person-search-input').addEventListener('input', () => syncPersons());
+    document.getElementById('toggle-add-person-btn').addEventListener('click', () => {
+      document.getElementById('add-person-drawer').classList.toggle('hidden');
+    });
+
+    document.getElementById('save-new-person-btn').addEventListener('click', () => {
+      const name = document.getElementById('new-person-name').value.trim();
+      if (!name) {
+        showToast('نام لکھنا لازمی ہے!', 'error');
+        return;
+      }
+      const p = {
+        id: 'p_' + Date.now(),
+        name,
+        sonOf: document.getElementById('new-person-sonof').value.trim(),
+        address: document.getElementById('new-person-address').value.trim(),
+        phone: document.getElementById('new-person-phone').value.trim()
+      };
+      appState.persons.unshift(p);
+      persistState();
+      syncPersons(p.id);
+      ['new-person-name', 'new-person-sonof', 'new-person-address', 'new-person-phone'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('add-person-drawer').classList.add('hidden');
+      showToast(`✓ "${name}" شامل ہو گیا!`);
+    });
+
+    document.getElementById('download-json-backup-btn').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(appState, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Neudrajaat_Backup_${getTodayISO()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('✓ بیک اپ ڈاؤن لوڈ ہو گیا!');
+    });
+
+    document.getElementById('restore-json-file-input').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const data = JSON.parse(ev.target.result);
+          if (Array.isArray(data.persons)) appState.persons = data.persons;
+          if (Array.isArray(data.entries)) appState.entries = data.entries;
+          persistState();
+          syncPersons();
+          renderRecent();
+          renderFullLog();
+          renderReports();
+          showToast('✓ بیک اپ ریستور ہو گیا!');
+        } catch (err) {
+          showToast('غلط JSON فائل!', 'error');
+        }
+        e.target.value = '';
+      };
+      reader.readAsText(file);
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setupAppIcon();
+      loadStateFromStorage();
+      document.getElementById('sticky-event-name').value = appState.stickyEvent;
+      document.getElementById('sticky-event-date').value = appState.stickyDate;
+      syncPersons();
+      setDirection('Liya');
+      renderItemTypeButtons();
+      renderDynamicFields();
+      renderRecent();
+      updateHeaderBadges();
+    });
+  </script>
+</body>
+</html>
